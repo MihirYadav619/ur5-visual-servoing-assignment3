@@ -6,12 +6,12 @@ The figures are the outputs of `python main.py --all --headless`, stored in [res
 
 ## Summary
 
-| Task | What it shows | My result (s* = [50, 40, 2500]) |
+| Task | What it shows | My result (s\* = [50, 40, 2500]) |
 |:---:|:---|:---|
 | 1 | Classic IBVS, static target | error 1068 → 1.0 px in 10 s; below 10 px after 6.2 s |
 | 2 | IBVS, moving target | steady tracking error 57.5 px (classic) → 9.1 px (compensated) |
 | 3 | Image-space RRT around a pillar | classic IBVS collides after 3 steps; RRT path: 0 collisions, min clearance 3.0 cm |
-| 4 | Image-space RRT* around a wall | path cost 5848 (RRT) → 1341 (RRT*), 4.4× shorter; 0 collisions |
+| 4 | Image-space RRT\* around a wall | path cost 5848 (RRT) → 1341 (RRT\*), 4.4× shorter; 0 collisions |
 
 ## 1. Desired feature (TODO 0)
 
@@ -22,7 +22,7 @@ centre, and `a` is its area in px². I chose
 GOAL_FEATURE = np.array([50.0, 40.0, 2500.0])
 ```
 
-This sits in the middle of the recommended ranges (x* 0–100, y* 0–80, a* 2000–3000), so it is reachable in all
+This sits in the middle of the recommended ranges (x\* 0–100, y\* 0–80, a\* 2000–3000), so it is reachable in all
 four tasks and leaves margin from the edges of the reachable set. I chose it on purpose to differ from the
 reference value [0, 0, 3000], so my results are not just a copy of `results_reference/`. The target ends
 slightly right of and below the image centre, and a bit farther away than in the reference (smaller area).
@@ -90,7 +90,7 @@ Every parent→child edge is drawn as a thin grey line, the nodes as blue dots, 
 thick red line on top. `np.column_stack` gives one row per coordinate, so the same code works for the 2-D
 image-plane plot and the 3-D `[x, y, a]` plot.
 
-### TODOs 7–8: RRT* (`planner.py`)
+### TODOs 7–8: RRT\* (`planner.py`)
 
 **Choose parent (TODO 7).** The new node first gets its extension parent as a candidate. Then, for each
 neighbour within 150 px, the cost through it is `cost[i] + ‖s_new − s_i‖`. The cheapest candidate wins if the
@@ -110,7 +110,7 @@ has a lower cost than the new node, so the rewire test can never succeed for it.
 
 ![Task 1](results/task1_static_ibvs/task1_results.png)
 
-- Error ‖s − s*‖: 1068 → 1.0 px in 100 steps (10 s). Final feature [50.0, 39.99, 2499] against s* = [50, 40, 2500].
+- Error ‖s − s\*‖: 1068 → 1.0 px in 100 steps (10 s). Final feature [50.0, 39.99, 2499] against s\* = [50, 40, 2500].
 - On the log-scale plot (b), the error falls along a straight line, which means it decays exponentially as
   expected from `ė = -λe` with λ = 1 s⁻¹. It drops below 10 px after 6.2 s. Below ~2 px the curve becomes
   noisy because the area is measured from a pixel mask and changes in whole pixels.
@@ -150,29 +150,29 @@ has a lower cost than the new node, so the rewire test can never succeed for it.
   IBVS in 22.5 s.
 - Collisions: **0**. Minimum robot–obstacle clearance: **2.98 cm**, above the 2 cm safety margin.
 - Final error 58 px. The planner stops at the first node within the goal radius R = 75 px. The final planned
-  node [94.7, 11.6, 2468] is 62 px from s*, so this residual is a result of the planner's goal radius, not a
+  node [94.7, 11.6, 2468] is 62 px from s\*, so this residual is a result of the planner's goal radius, not a
   tracking failure.
 
-### Task 4: Image-space RRT* (wall)
+### Task 4: Image-space RRT\* (wall)
 
-![RRT vs RRT*](results/task4_rrt_star/task4_rrt_vs_rrt_star.png)
+![RRT vs RRT\*](results/task4_rrt_star/task4_rrt_vs_rrt_star.png)
 
-| | RRT | RRT* |
+| | RRT | RRT\* |
 |:---|---:|---:|
 | Path cost (feature space) | 5848 | **1341** |
 | Tree nodes | 662 | 834 |
 | Planning time | 26.1 s | 55.7 s |
 | Waypoints after resampling | 406 | 94 |
 
-- RRT* gives a path **4.4× shorter** than RRT in the same environment. The RRT path takes a long detour into
-  the right part of the image and back. Choose-parent and rewiring straighten the RRT* path into a clean
+- RRT\* gives a path **4.4× shorter** than RRT in the same environment. The RRT path takes a long detour into
+  the right part of the image and back. Choose-parent and rewiring straighten the RRT\* path into a clean
   "U" around the wall.
-- The cost is planning time. RRT* runs all 3000 iterations instead of stopping at the first solution, and it
+- The cost is planning time. RRT\* runs all 3000 iterations instead of stopping at the first solution, and it
   does extra connectivity checks, so it takes about 2× longer.
-- Execution of the RRT* path: 94 control steps (9.4 s), **0 collisions**, minimum clearance 2.25 cm.
-- Final error 110.7 px. The planned end node [41.2, −7.2, 2487] is about 50 px from s*, inside the goal radius.
+- Execution of the RRT\* path: 94 control steps (9.4 s), **0 collisions**, minimum clearance 2.25 cm.
+- Final error 110.7 px. The planned end node [41.2, −7.2, 2487] is about 50 px from s\*, inside the goal radius.
   The executed final feature was [37.4, −17.0, 2406]. Most of the remaining error is area (−94 px²) and y
-  (−57 px), added while tracking the short final segment. Note that ‖s − s*‖ mixes px and px², so 94 px² of
+  (−57 px), added while tracking the short final segment. Note that ‖s − s\*‖ mixes px and px², so 94 px² of
   area error is only about a 4% difference in target size. A smaller goal radius, or a short classic-IBVS
   phase after the path ends, would reduce this residual.
 
@@ -180,7 +180,7 @@ has a lower cost than the new node, so the rewire test can never succeed for it.
 
 - `python -m unittest tests.test_framework tests.test_task1 tests.test_task2 tests.test_task3 tests.test_task4`
   runs 37 tests, all OK.
-- The unit tests use the reference goal [0, 0, 3000]. With it, my RRT and RRT* produce path costs of
+- The unit tests use the reference goal [0, 0, 3000]. With it, my RRT and RRT\* produce path costs of
   **6156 and 1862**, exactly the values in `results_reference/`. This confirms TODOs 5, 7 and 8 match the
   intended algorithm.
 
