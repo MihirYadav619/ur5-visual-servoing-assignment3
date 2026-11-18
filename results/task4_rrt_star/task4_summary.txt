@@ -1,0 +1,20 @@
+Task 4: Image-Space RRT*
+========================
+rrt path cost               : 5848
+rrt star path cost          : 1341
+rrt nodes                   : 662
+rrt star nodes              : 834
+rrt planning time s         : 26.1
+rrt star planning time s    : 55.72
+rrt waypoints               : 406
+rrt star waypoints          : 94
+execution status            : trajectory_complete
+control steps               : 94
+motion time s               : 9.4
+initial error px            : 1007
+final error px              : 110.7
+mean tracking error px      : 26.77
+min clearance cm            : 2.252
+collisions                  : 0
+min image clearance px      : None
+headline                    : path cost RRT 5848 -> RRT* 1341; 0 collisions, final error 111 px, motion 9 s

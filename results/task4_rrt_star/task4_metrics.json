@@ -1,0 +1,20 @@
+{
+  "rrt_path_cost": 5847.931952751071,
+  "rrt_star_path_cost": 1340.9740526609382,
+  "rrt_nodes": 662,
+  "rrt_star_nodes": 834,
+  "rrt_planning_time_s": 26.098700046539307,
+  "rrt_star_planning_time_s": 55.71680998802185,
+  "rrt_waypoints": 406,
+  "rrt_star_waypoints": 94,
+  "execution_status": "trajectory_complete",
+  "control_steps": 94,
+  "motion_time_s": 9.4,
+  "initial_error_px": 1006.8337310528505,
+  "final_error_px": 110.67289961028975,
+  "mean_tracking_error_px": 26.771362306583946,
+  "min_clearance_cm": 2.251789607065046,
+  "collisions": 0,
+  "min_image_clearance_px": null,
+  "headline": "path cost RRT 5848 -> RRT* 1341; 0 collisions, final error 111 px, motion 9 s"
+}

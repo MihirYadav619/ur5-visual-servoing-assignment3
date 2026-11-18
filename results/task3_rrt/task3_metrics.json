@@ -1,0 +1,19 @@
+{
+  "classic_ibvs_status": "collision",
+  "classic_ibvs_steps": 3,
+  "rrt_nodes": 74,
+  "rrt_iterations": 280,
+  "path_cost": 3282.778200721026,
+  "planning_time_s": 3.0570993423461914,
+  "waypoints": 225,
+  "execution_status": "trajectory_complete",
+  "control_steps": 225,
+  "motion_time_s": 22.5,
+  "initial_error_px": 686.3043493973607,
+  "final_error_px": 58.037239950930086,
+  "mean_tracking_error_px": 20.617653424250207,
+  "min_clearance_cm": 2.975485566038095,
+  "collisions": 0,
+  "min_image_clearance_px": null,
+  "headline": "classic IBVS: collision; RRT: 0 collisions, final error 58 px, min clearance 3.0 cm"
+}
